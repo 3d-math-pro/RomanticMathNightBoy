@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<title>x_distance_love</title>
+	</head>
+	<body>
+		<script type="x-shader/x-vertex" id="vs">
+			varying vec2 vUv;
+			void main() {
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			}
+		</script>
+		<script type="x-shader/x-fragment" id="fs">
+			// ============================================================================
+			// プレゼン資料
+			// ============================================================================
+			precision mediump float;
+			uniform vec2	resolution;
+			uniform float time;
+			uniform sampler2D prevScene;
+
+			float lengthHamming(vec3 p){
+				// カメラの位置を変化させる
+				p = vec3(p.x*sin(time),p.y*sin(time),p.z*sin(time));
+				if(p==vec3(0.0, 0.0, 0.0)){
+					return 2.0;
+				}else{
+					return 3.0;
+				}
+			}
+
+			float lengthManhattan(vec3 p){
+					return abs(p.x)+abs(p.y)+abs(p.z);
+			}
+
+			float lengthChebyshev(vec3 p){
+					return max(max(abs(p.x), abs(p.y)), abs(p.z));
+			}
+
+			/* 1/2*d/(1+d)直積距離 */
+			float lengthDirectProduct(float d){
+					return 0.5*d/(1.0+d);
+			}
+
+			/* 適当に作ったやつ */
+			float lengthMinChebyshev(vec3 p){
+					return min(min(abs(p.x), abs(p.y)), abs(p.z));
+			}
+			float lengthClamp(vec3 p){
+					return clamp(abs(p.x), abs(p.y), abs(p.z));
+			}
+			float lengthInverseClamp(vec3 p){
+					return max(min(abs(p.x), abs(p.y)), abs(p.z));
+			}
+
+			// 距離関数を呼び出すハブ関数
+			float lengthHub(vec3 p){
+				return length(p);
+				// return lengthHamming(p);
+				// return lengthManhattan(p);
+				// return lengthChebyshev(p);
+				/* 適当に作ったやつ */
+				// return lengthMinChebyshev(p);
+				// return lengthClamp(p);
+				// return lengthInverseClamp(p);
+				/* 直積距離をかませる */
+				// return lengthDirectProduct(length(p));
+				// return lengthDirectProduct(lengthHamming(p));
+				// return lengthDirectProduct(lengthManhattan(p));
+				// return lengthDirectProduct(lengthChebyshev(p));
+			}
+
+			float sdHeart(vec3 p)
+			{
+					p = vec3(p.x - 1.5, p.y - 1.0, p.z);
+					// 回転
+					mat3 m_y = mat3(cos(time),0,-sin(time),0,1,0,sin(time),0,cos(time));
+					p = m_y * p;
+					mat3 m_z = mat3(cos(3.14),-sin(3.14),0,sin(3.14),cos(3.14),0,0,0,1);
+					p = m_z * p;
+					/* Heart距離関数 */
+					vec3 q = vec3(p.x, p.y, 1.5*p.z);
+					return sqrt(lengthHub(q)*lengthHub(q) + pow(p.x*p.x+0.1125*p.z*p.z, 0.33)*p.y)- 1.0;
+			}
+
+			float sdHeart01(vec3 p)
+			{
+					p = vec3(p.x + 1.5, p.y - 1.0, p.z);
+					// 回転
+					mat3 m_y = mat3(cos(time),0,-sin(time),0,1,0,sin(time),0,cos(time));
+					p = m_y * p;
+					/* Heart距離関数 */
+					vec3 q = vec3(0.83*p.x, (p.y-pow(0.5*p.x*p.x, 0.3)), p.z);
+					return lengthHub(q)-1.0;
+			}
+
+			float sdSphere(vec3 p)
+			{
+					p = vec3(p.x, p.y + 1.5, p.z);
+					// 回転
+					mat3 m_y = mat3(cos(time),0,-sin(time),0,1,0,sin(time),0,cos(time));
+					p = m_y * p;
+
+				return lengthHub(p)-1.0;
+			}
+
+
+			// 距離関数を呼び出すハブ関数
+			float distanceHub(vec3 p){
+					return min(min(sdHeart(p), sdHeart01(p)), sdSphere(p));
+			}
+
+			// 法線を生成する
+			vec3 genNormal(vec3 p){
+					float d = 0.001;
+					return normalize(vec3(
+							distanceHub(p + vec3(	d, 0.0, 0.0)) - distanceHub(p + vec3( -d, 0.0, 0.0)),
+							distanceHub(p + vec3(0.0,	 d, 0.0)) - distanceHub(p + vec3(0.0,	-d, 0.0)),
+							distanceHub(p + vec3(0.0, 0.0,	 d)) - distanceHub(p + vec3(0.0, 0.0,	-d))
+					));
+			}
+
+			void main(){
+					// スクリーンスペースを考慮して座標を正規化する
+					vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+					// カメラを定義する
+					vec3 cPos = vec3(0.0,	0.0,	5.0); // カメラの位置
+					vec3 cDir = vec3(0.0,	0.0, -1.0); // カメラの向き(視線)
+					vec3 cUp	= vec3(0.0,	1.0,	0.0); // カメラの上方向
+					vec3 cSide = cross(cDir, cUp);		 // 外積を使って横方向を算出
+					float targetDepth = 1.0;					 // フォーカスする深度
+					// カメラの情報からレイを定義する
+					vec3 ray = normalize(cSide * p.x + cUp * p.y + cDir * targetDepth);
+					// マーチングループを組む
+					float dist = 0.0;	// レイとオブジェクト間の最短距離
+					float rLen = 0.0;	// レイに継ぎ足す長さ
+					vec3	rPos = cPos; // レイの先端位置(初期位置)
+					for(int i = 0; i < 32; ++i){
+							dist = distanceHub(rPos);
+							rLen += dist;
+							rPos = cPos + ray * rLen;
+					}
+					// レイとオブジェクトの距離を確認
+					if(abs(dist) < 0.001){
+							// 法線を算出
+							vec3 normal = genNormal(rPos);
+							// ライトベクトルの定義
+							vec3 light = normalize(vec3(1.0, 1.0, 1.0));
+							// ライトベクトルとの内積を取る
+							float diff = max(dot(normal, light), 0.1);
+							gl_FragColor = vec4(vec3(diff*240.0/255.0, diff*128.0/255.0, diff*128.0/255.0), 1.0);
+					}else{
+							// 衝突しなかった場合はそのまま黒
+							gl_FragColor = vec4(vec3(0.0, 0.0, 0.0), 1.0);
+					}
+			}
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js"></script>
+		<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+		<script src="x_distance_love.js"></script>
+	</body>
+</html>
