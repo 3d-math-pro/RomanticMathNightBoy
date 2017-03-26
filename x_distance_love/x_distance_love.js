@@ -28,7 +28,7 @@ const shaderUniforms = {
 	// 	value: new
 	// }
 	time: {
-		value: Date.now()
+		value: 0
 	}
 };
 
@@ -50,9 +50,12 @@ const mesh     = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
 
+const clock    = new THREE.Clock();
+
 (function animate(){
 	requestAnimationFrame(animate);
 	renderer.render(shaderScene, shaderCamera, target);
 	material.map = target.texture;
+	shaderUniforms.time.value = clock.getElapsedTime();
 	renderer.render(scene, camera);
 }());
