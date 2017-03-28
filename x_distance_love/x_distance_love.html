@@ -20,6 +20,18 @@
 			uniform float time;
 			uniform sampler2D prevScene;
 
+			// L^2ノルムのプログラミングでの実装
+			float normLebegueTwo(vec3 p){
+				float split      = 10.0;
+				float threeSplit = split * split * split;
+				float sumLeght   = 0.0;
+				vec3 splitXYZ    = vec3(p.x/split, p.y/split, p.z/split);
+				for(int i=0; i < 1000; i++){
+					sumLeght += length(p) * splitXYZ.x * splitXYZ.y * splitXYZ.z;
+				}
+				return sumLeght - 1.0;
+			}
+
 			float lengthHamming(vec3 p){
 				// カメラの位置を変化させる
 				p = vec3(p.x*sin(time),p.y*sin(time),p.z*sin(time));
