@@ -68,10 +68,10 @@
 
 			// 距離関数を呼び出すハブ関数
 			float lengthHub(vec3 p){
-				return length(p);
+				// return length(p);
 				// return lengthHamming(p);
 				// return lengthManhattan(p);
-				// return lengthChebyshev(p);
+				return lengthChebyshev(p);
 				/* 適当に作ったやつ */
 				// return lengthMinChebyshev(p);
 				// return lengthClamp(p);
@@ -81,6 +81,8 @@
 				// return lengthDirectProduct(lengthHamming(p));
 				// return lengthDirectProduct(lengthManhattan(p));
 				// return lengthDirectProduct(lengthChebyshev(p));
+				/* L^2ノルム */
+				// return normLebegueTwo(p);
 			}
 
 			float sdHeart(vec3 p)

@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>ロマンティックなので、〇距離恋愛について語ってみる</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>
+						ロマンティックなので、<br>
+					</h2>
+					<h1>
+						〇距離恋愛について<br>
+						語ってみる♡
+					</h1>
+				</section>
+				<section>
+					<div align="left">
+						<h3>遠距離恋愛とは、</h3>
+						遠距離恋愛（えんきょりれんあい）とは、居住区における物理的距離が離れている状態での恋愛関係またはその状態のことをいう。
+						しかし、物理的距離が離れている場合以外でも「遠距離恋愛」とされるケースが存在するため明確な定義は存在しない。 『遠恋』と略される場合がある。
+						遠距離恋愛の場合、お互いが直接会う機会が少ないため、手紙や電話や電子メールが主な交流手段となることが多い。
+						<br>
+						※ wikipediaより
+					</left>
+				</section>
+				<section>
+					ま、君らには、縁がない話だろうけどｗｗｗｗｗｗｗ
+				</section>
+				<section>
+					ちなみに<br>
+					僕にも縁がない…
+				</section>
+				<section>
+					それでも恋愛を語りたい！！
+				</section>
+				<section>
+					そうだ！<br>
+					愛は、距離によって変化するのだろうか?
+				</section>
+				<section>
+					恋愛経験が乏しい僕でも…<br>
+					距離がよっては、恋愛ができるかもしれない…
+				</section>
+				<section>
+					長い前振りは、このあたりで、距離に定義します。
+				</section>
+				<section>
+					まず、数学で距離ってなによ？
+				</section>
+				<section>
+					その前に、みんなの知っている距離
+				</section>
+				<section>
+					$
+						\sqrt{x_1^2+x_2^2+x_3^2+\cdots}
+					$
+				</section>
+				<section>
+					距離ってこれのことじゃないの？
+				</section>
+				<section>
+					実は、これユークリッド距離と言います。
+				</section>
+				<section>
+					ユークリッド距離、こそ距離だ！！！
+					<br>
+				</section>
+				<section>
+					なんて、ガンダムが、無印しかないというようなもの…<br>
+					いや、犬が、柴犬しかいないと言っているようなもの…
+
+				</section>
+				<section>
+					ということで、距離に定義を書きます。
+				</section>
+				<section>
+					<div align="left">
+						<h2>定義</h2>
+						集合 X上で定義された 2 変数の実数値関数<br>
+						<center>$d: X × X → R$<br></center>
+						<div align="right">が、任意の $x,y,z ∈ X$ に対して<br></div>
+
+						1. 非負性（正定値性） : $d(x, y) ≥ 0$<br>
+						2. $x = y ⇒ d(x, y) = 0$<br>
+						3. 対称性 : $d(x, y) = d(y, x)$<br>
+						4. 三角不等式 : $d(x, y) + d(y, z) ≥ d(x, z)$<br>
+						を満たすとき、$d$ は $X$ 上の距離関数であるといい、対 $(X, d)$ を距離空間と呼ぶ。
+					</div>
+				</section>
+
+				<section>
+					<h1>有名な距離</h1>
+				</section>
+
+				<section>
+					<h2>ハミング距離</h2><br>
+					$d(x_1,x_2)=n−\sum \delta(x1i,x2i)  $<br>
+					<a href="http://ibisforest.org/index.php?Hamming%E8%B7%9D%E9%9B%A2">詳しくはここ</a>
+				</section>
+
+				<section>
+					<h2>マンハッタン距離</h2><br>
+					$d(x_1,x_2):=\sum|x_{1i}−x_{2i}| $<br>
+					<a href="http://ibisforest.org/index.php?Manhattan%E8%B7%9D%E9%9B%A2">詳しくはここ</a>
+				</section>
+
+				<section>
+					<h2>チェビシェフ距離</h2><br>
+					$d(p,q):=\max _{i}(|p_{i}-q_{i}|)$<br>
+					<a href="https://ja.wikipedia.org/wiki/%E3%83%81%E3%82%A7%E3%83%93%E3%82%B7%E3%82%A7%E3%83%95%E8%B7%9D%E9%9B%A2">詳しくはここ</a>
+				</section>
+
+				<section>
+					おまけで
+					<h2>$L^2$ノルム</h2><br>
+					$ (\sum |f(x_n) \cdot \Delta x_n| )^{1/p} $<br>
+					<a href="https://ja.wikipedia.org/wiki/%E3%83%90%E3%83%8A%E3%83%83%E3%83%8F%E7%A9%BA%E9%96%93">面倒なので、これ見てちょ</a>
+				</section>
+
+
+				<section>
+					え、恋愛は？
+				</section>
+
+				<section>
+					<img src="heart01.PNG" aling="right"><br>
+					ハートの方程式01<br>
+					$x^2 + (y-x^\frac{2}{3})^2 = 4$<br>
+					詳しは、この記事へ<br>
+					<a href="http://d.hatena.ne.jp/Zellij/20111205/p1">ハートの方程式</a>
+				</section>
+
+				<section>
+					こっちの方がきれい<br>
+					<img src="heart02.PNG" aling="right"><br>
+					ハートの方程式02<br>
+					$(x^2+\frac{9}{4}y^2+z^2)^3 - (x^2+\frac{9}{80}y^2)z^3 = 0$<br>
+					詳しは、この記事へ<br>
+					<a href="http://itchyny.hatenablog.com/entry/20130214/1360847516">美しすぎるハートの数式</a>
+				</section>
+
+				<section>
+					<h2>ここで本題,距離が違うと愛の形は、変わるのか？</h2>
+				</section>
+
+				<section>
+					<h2>どうやって、実装するの?</h2>
+				</section>
+
+				<section>
+					<h2>今回は、three.js(WebGL)とGLSLで実装します。</h2>
+				</section>
+
+				<section>
+					<h1>実装！！！！！！</h1>
+				</section>
+
+				<section>
+					<h2>今回の知見</h2><br>
+					<ul>
+						<li>ハミング距離恋愛は、なんかヌメってしている</li>
+						<li>マンハッタン距離恋愛は、なんか怪しい</li>
+						<li>チェビシェフ距離恋愛は、初心者マーク？</li>
+						<li>$L^2$ノルム恋愛は、僕のPCでは実装できない</li>
+					</ul>
+				</section>
+
+				<section>
+					もし次があるなら！！！
+					<h2>$L^2$ノルム恋愛について語りたい！</h2>
+				</section>
+
+				<section>
+					今回の準備でQiitaに記事書きました。<br>
+					<ul>
+						<li><a href="http://qiita.com/muripo_life/items/a4e674ec842630618927">GLSLレイマーチング研究_距離関数について勉強してみた15(Heartの関数を作ってみた)</a></li>
+						<li><a href="http://qiita.com/muripo_life/items/f24408ca1d06eb0658e3">GLSLレイマーチング研究_距離関数について勉強してみた16(Heartの関数を作ってみた_その2)</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>最後に自己紹介</h2>
+					<ul>
+						<li>Twitter:<a href="https://twitter.com/muripo_life">ちゃんおぎ@muripo_life</a></li>
+						<li>「ムリポさん」って言われると、割と恥ずかしいです…</li>
+						<li>職業：エンジニア（白目…）</li>
+						<li>趣味：ライブ観戦</li>
+						<li>主催コミュニティー
+							<ol>
+								<li><a href="https://atnd.org/groups/saitama_games_unity">さいたまげーむす</a>→毎週土曜開催</li>
+								<li><a href="https://atnd.org/groups/ue4yochi">UE4よちよち勉強</a>→隔週日曜開催</li>
+								<li><a href="https://3d-math-program.connpass.com/">3Dプログラミングのための数学勉強会</a>→毎週火曜開催</li>
+								<li>etc…</li>
+							</ol>
+						</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

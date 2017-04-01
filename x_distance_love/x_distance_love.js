@@ -43,7 +43,7 @@ const shaderMesh = new THREE.Mesh(shaderGeometry, shaderMaterial);
 
 shaderScene.add(shaderMesh);
 
-const geometry = new THREE.CubeGeometry(20, 20, 20);
+const geometry = new THREE.CubeGeometry(50, 20, 20);
 const material = new THREE.MeshBasicMaterial();
 
 const mesh     = new THREE.Mesh(geometry, material);
